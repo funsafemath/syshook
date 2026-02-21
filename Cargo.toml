@@ -1,0 +1,20 @@
+[package]
+name = "syshook"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+libc = "0.2.174"
+memmap = "0.7.0"  # memmap2 does not have an option to create an anonymous shared mapping, which is quite strange
+nix = { version = "0.30.1", features = [ "uio", "process", "poll"] }
+seccompy = { git = "https://codeberg.org/funsafemath/seccompy" }
+thiserror = "2.0.18"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+strip = true
+opt-level = "s"
+lto = "fat"
+codegen-units = 1
