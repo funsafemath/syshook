@@ -32,9 +32,20 @@ jobs:
       - uses: actions/upload-artifact@v6
         with:
           name: libsyshook-${{ matrix.name }}
-          path: result/*
-      - name: Release
-        if: github.ref_type == 'tag'
-        uses: softprops/action-gh-release@v2
-        with:
-          files: result/*
+          path: result/lib/libsyshook.so
+
+  release:
+    needs: nix-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/download-artifact@v7
+      with:
+        path: artifacts/
+    - run: mkdir artifacts-flattened
+    - run: (cd artifacts; for dir in */; do mv "${dir}libsyshook.so" "./../artifacts-flattened/${dir%/}.so"; done)
+    - uses: softprops/action-gh-release@v2
+      if: github.ref_type == 'tag'
+      with:
+        files: artifacts-flattened/*
