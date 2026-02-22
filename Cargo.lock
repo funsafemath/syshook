@@ -69,7 +69,7 @@ dependencies = [
 [[package]]
 name = "seccompy"
 version = "0.1.1"
-source = "git+https://codeberg.org/funsafemath/seccompy#270d52d7aa25552086423ec510fbd98a9a7c43c8"
+source = "git+https://codeberg.org/funsafemath/seccompy#7d6f6c81a94600725c7b45ed828ed587d55c2bbf"
 dependencies = [
  "libc",
 ]
